@@ -1,14 +1,23 @@
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '@/components/EditScreenInfo';
+import { Button, StyleSheet } from 'react-native';
 import { Text, View } from '@/components/Themed';
+import auth from '@react-native-firebase/auth';
+import { useRouter } from 'expo-router';
+import React, { useEffect } from 'react';
 
 export default function TabOneScreen() {
+  const handleSignOut = async () => {
+    try {
+      await auth().signOut();
+    } catch (error) {
+      console.error('Error signing out: ', error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab One</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+      <Button title="Sign Out" onPress={handleSignOut} />
     </View>
   );
 }
